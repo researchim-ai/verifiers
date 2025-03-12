@@ -3,6 +3,7 @@ from verifiers.tools import calculator
 from verifiers.prompts import CALCULATOR_FEW_SHOT
 
 model_name = "Qwen/Qwen2.5-1.5B-Instruct"
+model_name = "/media/user/My Passport2/hfmodels/Qwen2.5-1.5B-Instruct"
 model, tokenizer = vf.get_model_and_tokenizer(model_name)
 
 # Initialize tool environment for GSM8K
@@ -20,12 +21,12 @@ rubric = vf_env.get_rubric()
 run_name = "gsm8k-calc_" + model_name.split("/")[-1].lower()
 training_args = vf.get_default_grpo_config(
     run_name=run_name,
-    num_gpus=8
+    num_gpus=2
 )
 # rollouts per prompt
 training_args.num_generations = 7
 # minibatch size per GPU ( bs 6 * 7 gpus / 7 rollouts -> 6 prompts per batch)
-training_args.per_device_train_batch_size = 6
+training_args.per_device_train_batch_size = 7
 # batches to accumulate (6 prompts * 4 -> 32 prompts per global batch)
 training_args.gradient_accumulation_steps = 4
 # steps per global batch (1 on-policy, 1 off-policy)

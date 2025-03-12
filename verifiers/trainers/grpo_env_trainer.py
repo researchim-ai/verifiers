@@ -39,7 +39,7 @@ class GRPOEnvTrainer(GRPOTrainer):
             eval_dataset: Optional[Union[Dataset, IterableDataset]] = None,
             processing_class: Optional[PreTrainedTokenizerBase] = None,
             callbacks: Optional[list[TrainerCallback]] = None,
-            optimizers: tuple[Optional[torch.optim.Optimizer], Optional[torch.optim.lr_scheduler.LambdaLR]] = (None, None),
+            # optimizers: tuple[Optional[torch.optim.Optimizer], Optional[torch.optim.lr_scheduler.LambdaLR]] = (None, None),
             peft_config: Optional["PeftConfig"] = None,
             **kwargs,
     ):
@@ -55,7 +55,7 @@ class GRPOEnvTrainer(GRPOTrainer):
             eval_dataset=eval_dataset,
             processing_class=processing_class,
             callbacks=callbacks,
-            optimizers=optimizers,
+            # optimizers=optimizers,
             peft_config=peft_config,
             **kwargs,
         )
