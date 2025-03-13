@@ -3,10 +3,10 @@ PatchFastRL("GRPO", FastLanguageModel)
 import verifiers as vf
 from verifiers.prompts import CODE_PROMPT
 
-model_name = "/media/user/My Passport2/hfmodels/Qwen2.5-1.5B-Instruct"
+model_name = "Qwen/Qwen2.5-Math-1.5B"
 # model, tokenizer = vf.get_model_and_tokenizer(model_name)
 
-max_seq_length = 1000
+max_seq_length = 1500
 lora_rank = 32
 
 model, tokenizer = FastLanguageModel.from_pretrained(
@@ -47,7 +47,7 @@ training_args.per_device_train_batch_size = 8
 training_args.gradient_accumulation_steps = 4
 # steps per global batch (1 on-policy, 1 off-policy)
 # training_args.num_iterations = 2
-training_args.max_steps = 100
+training_args.max_steps = 500
 training_args.beta = 0.01
 # evals
 # training_args.eval_strategy = "steps"
