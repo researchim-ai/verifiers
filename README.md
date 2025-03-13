@@ -15,6 +15,7 @@ conda create -n vf_unsloth python=3.11
 conda activate vf_unsloth
 git clone https://github.com/researchim-ai/verifiers-unsloth
 cd verifiers-unsloth
+pip install -e .
 python verifiers/examples/gsm8k_unsloth.py
 ```
 
