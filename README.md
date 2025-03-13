@@ -9,7 +9,6 @@ This repository contains a set of tools for reinforcement learning with LLMs in 
 
 ## Installation
 
-PyPI [coming soon](https://pypi.org/project/verifiers/) once a couple more features are added, just clone it for now and run:
 ```
 conda create -n vf_unsloth python=3.11
 conda activate vf_unsloth
