@@ -9,6 +9,7 @@ license = {text = "MIT"}
 requires-python = ">=3.11"
 dependencies = [
     "torch",
+    "unsloth"
     "setuptools",
     "deepspeed==0.16.3",
     "accelerate",
@@ -16,11 +17,10 @@ dependencies = [
     "wandb",
     "rich",
     "duckduckgo-search",
-    "trl @ git+https://github.com/huggingface/trl.git",
+    "trl @ git+https://github.com/huggingface/trl.git@b55d9f0412a03369427ead4d7b06ada584c860eb",
     "liger-kernel>=0.5.2",
     "vllm>=0.7.3",
     "brave-search>=0.1.8",
-    "unsloth"
 ]
 [tool.setuptools.packages.find]
 where = ["."]        # или указать конкретную директорию, если используешь src layout

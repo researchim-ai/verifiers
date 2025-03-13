@@ -83,6 +83,7 @@ class GRPOEnvTrainer(GRPOTrainer):
 
         # Gather the original prompts in message dict form, not the text form
         all_prompts = gather_object(prompts)
+        print("HELLO")
         if self.accelerator.is_main_process:
             env_result = self.env.generate(
                 prompts=all_prompts,

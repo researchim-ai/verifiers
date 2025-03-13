@@ -1,12 +1,27 @@
 from unsloth import FastLanguageModel, PatchFastRL
 PatchFastRL("GRPO", FastLanguageModel)
 import verifiers as vf
-from verifiers.prompts import CODE_PROMPT
+from verifiers.tools import calculator
+from verifiers.prompts import CALCULATOR_FEW_SHOT
 
-model_name = "Qwen/Qwen2.5-Math-1.5B"
+model_name = "Qwen/Qwen2.5-1.5B-Instruct"
+model_name = "/media/user/My Passport2/hfmodels/Qwen2.5-1.5B-Instruct"
 # model, tokenizer = vf.get_model_and_tokenizer(model_name)
 
-max_seq_length = 1500
+# Initialize tool environment for GSM8K
+vf_env = vf.ToolEnv(
+    dataset="gsm8k",
+    few_shot=CALCULATOR_FEW_SHOT[0],
+    tools=[calculator],
+    max_steps=5
+)
+dataset = vf_env.get_dataset()
+eval_dataset = vf_env.get_eval_dataset(n=100)
+rubric = vf_env.get_rubric()
+
+# notable defaults: lr = 1e-6, max_grad_norm = 0.01, constant lr 10 warmup steps, 1024 tokens in+out
+run_name = "gsm8k-calc-unsloth_" + model_name.split("/")[-1].lower()
+max_seq_length = 2000
 lora_rank = 32
 
 model, tokenizer = FastLanguageModel.from_pretrained(
@@ -17,7 +32,6 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     max_lora_rank = lora_rank,
     gpu_memory_utilization = 0.4, # сколько памяти будет занимать модель на видеокарте, можно варьировать
 )
-
 
 model = FastLanguageModel.get_peft_model(
     model,
@@ -31,13 +45,7 @@ model = FastLanguageModel.get_peft_model(
     random_state = 3407,
 )
 
-vf_env = vf.CodeEnv(dataset="gsm8k", few_shot=[], system_prompt=CODE_PROMPT)
-dataset = vf_env.get_dataset()
-#eval_dataset = vf_env.get_eval_dataset(n=20)
-rubric = vf_env.get_rubric()
-
 # notable defaults: lr = 1e-6, max_grad_norm = 0.01, constant lr 10 warmup steps, 1024 tokens in+out
-run_name = "gsm8k-code-peft_" + model_name.split("/")[-1].lower()
 training_args = vf.get_default_grpo_config(run_name=run_name, num_gpus=2)
 # rollouts per prompt
 training_args.num_generations = 8
@@ -55,7 +63,8 @@ training_args.beta = 0.01
 # training_args.eval_steps = 100
 # lora
 
-
+import pdb
+# pdb.set_trace()
 trainer = vf.GRPOEnvTrainer(
     model=model,
     processing_class=tokenizer,
