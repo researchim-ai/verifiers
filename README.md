@@ -1,6 +1,6 @@
 # Verifiers-unsloth: Reinforcement Learning with LLMs in Verifiable Environments
 
-This repo is a fork of https://github.com/willccbb/verifiers with added unsloth examples (for limited)
+This repo is a fork of https://github.com/willccbb/verifiers with added unsloth examples (for limited resources experiments)
 
 This repository contains a set of tools for reinforcement learning with LLMs in verifiable environments. 
 
